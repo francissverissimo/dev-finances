@@ -267,6 +267,33 @@ input {
 .input-group.actions button {
    width: 48%;
 }
+
+/* input-group type radio */
+.input-group.radio {
+   display: flex;
+   align-items: center;
+   padding: 0.3rem;
+}
+
+.input-group.radio #expense {
+   width: auto;
+   margin-right: 0.2rem;
+}
+
+.input-group.radio #income {
+   width: auto;
+   margin-left: 1rem;
+   margin-right: 0.2rem;
+}
+
+.input-group.radio label:first-of-type {
+   color: var(--red);
+}
+
+.input-group.radio label:last-of-type {
+   color: var(--green);
+}
+
 /* Footer ================ */
 
 @media (min-width: 800px) {

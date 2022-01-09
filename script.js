@@ -114,7 +114,15 @@ const DOM = {
 
 const Utils = {
    formatAmount(value) {
+      // Sempre receber um número positivo pelo input
+      value = value < 0 ? value * -1 : value;
+      
       value = value * 100;
+      
+      // Pegar valor do input radio, converter número de acordo
+      // com este valor, expense(* -1) ou income.
+      const radioValue = Form.getValueRadioExpenseOrIncome();
+      value = radioValue === "expense" ? value * -1 : value;
 
       return Math.round(value);
    },
@@ -133,7 +141,7 @@ const Utils = {
          currency: "BRL"
       });
 
-      return signal + value
+      return signal + value;
    }
 };
 
@@ -141,12 +149,14 @@ const Form = {
    description: document.querySelector("input#description"),
    amount: document.querySelector("input#amount"),
    date: document.querySelector("input#date"),
+   radio: document.form.expenseOrIncome,
 
    getValues() {
       return {
          description: Form.description.value,
          amount: Form.amount.value,
-         date: Form.date.value
+         date: Form.date.value,
+         radio: Form.radio.value
       }
    },
 
@@ -154,7 +164,7 @@ const Form = {
       const {
          description,
          amount,
-         date
+         date,
       } = Form.getValues();
 
       if (description.trim() === "" ||
@@ -172,7 +182,6 @@ const Form = {
       } = Form.getValues();
 
       amount = Utils.formatAmount(amount);
-      console.log(amount);
 
       date = Utils.formatDate(date);
 
@@ -181,6 +190,12 @@ const Form = {
          amount,
          date
       }
+   },
+
+   getValueRadioExpenseOrIncome() {
+      let { radio } = Form.getValues();
+
+      return radio;
    },
 
    saveTransaction(transaction) {
