@@ -35,10 +35,23 @@ const Transaction = {
       Transaction.all.push(transaction);
       App.reload();
    },
+
    remove(index) {
       Transaction.all.splice(index, 1);
       App.reload();
    },
+
+   convertDate(date) {
+      const splittedDate = date.split("/");
+
+      return new Date(`${splittedDate[1]}-${splittedDate[0]}-${splittedDate[2]}`);
+   },
+
+   sortTransactions(transactions) {
+      transactions.sort((a, b) =>
+         Transaction.convertDate(a.date) - Transaction.convertDate(b.date));
+   },
+
    incomes() {
       let income = 0
       Transaction.all.forEach(transaction => {
@@ -116,9 +129,9 @@ const Utils = {
    formatAmount(value) {
       // Sempre receber um número positivo pelo input
       value = value < 0 ? value * -1 : value;
-      
+
       value = value * 100;
-      
+
       // Pegar valor do input radio, converter número de acordo
       // com este valor, expense(* -1) ou income.
       const radioValue = Form.getValueRadioExpenseOrIncome();
@@ -225,6 +238,9 @@ const Form = {
 
 const App = {
    init() {
+      // Ordenar transações pela data, de maneira crescente
+      Transaction.sortTransactions(Transaction.all);
+
       Transaction.all.forEach(DOM.addTransaction);
 
       DOM.updateBalance();
