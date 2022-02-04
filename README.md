@@ -2,7 +2,7 @@
 
 Site of a simple financial control application.
 
-### site published <a href="https://francissverissimo.github.io/dev-finances/" target="_blank">here</a>
+### Site published [here](https://francissverissimo.github.io/dev-finances/)
 
 ### This site is built with:
 
